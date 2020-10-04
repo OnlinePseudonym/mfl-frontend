@@ -1,0 +1,25 @@
+.sidenav li > .btn-flat {
+  color: rgba(0, 0, 0, 0.87);
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 32px;
+  width: 100%;
+  text-align: left;
+}
+
+.sidenav li > .btn-flat:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidenav button.btn-flat > .material-icons {
+  float: left;
+  height: 48px;
+  line-height: 48px;
+  margin: 0 32px 0 0;
+  width: 24px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 24px;
+}
