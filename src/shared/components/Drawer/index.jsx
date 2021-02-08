@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExitToApp } from '@material-ui/icons';
 import { useAuth } from 'context/auth-context';
-import SelectLeague from 'shared/components/Drawer/SelectLeague';
+import SelectLeague from './SelectLeague';
 
 function SideNav(props) {
   const { logout } = useAuth();

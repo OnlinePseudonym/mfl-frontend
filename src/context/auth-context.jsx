@@ -28,11 +28,11 @@ function AuthProvider(props) {
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('league');
     setUser(null);
   };
 
   const validate = (token) => {
-    console.log(token);
     return fetch(`${BASE_API_URL}/validate/`, {
       method: 'POST',
       headers: {

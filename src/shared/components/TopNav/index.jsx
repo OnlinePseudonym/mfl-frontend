@@ -7,7 +7,7 @@ const TopNav = () => {
     <nav className="top-nav light-green lighten-3">
       <div className="container">
         <div className="nav-wrapper">
-          <Link to="/" class="brand-logo grey-text text-darken-4">
+          <Link to="/" className="brand-logo grey-text text-darken-4">
             MFL
           </Link>
           <button

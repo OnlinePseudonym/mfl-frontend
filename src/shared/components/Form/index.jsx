@@ -1,8 +1,5 @@
 import React from 'react';
 
-const Form = (props) => {
-  const { children } = props;
-  return <form>{...children}</form>;
-};
+const Form = ({ children }) => <form>{children}</form>;
 
 export default Form;

@@ -1,85 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import Pagination from 'shared/components/Pagination';
+import { Linear } from 'shared/components/Spinner';
 
-function pagination(c, m) {
-  const current = c;
-  const last = m;
-  const delta = 2;
-  const left = current - delta;
-  const right = current + delta + 1;
-  const range = [];
-  const rangeWithDots = [];
-  let l;
+const Player = ({ item }) => (
+  <a className="collection-item" href={`/players/${item.id}`}>
+    {item.firstName} {item.lastName}, {item.position} - {item.team}
+  </a>
+);
 
-  // eslint-disable-next-line no-plusplus
-  for (let i = 1; i <= last; i++) {
-    if (i === 1 || i === last || (i >= left && i < right)) {
-      range.push(i);
-    }
-  }
+const FreeAgents = ({ leagueId }) => {
+  const [freeAgents, setFreeAgents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  for (const i of range) {
-    if (l) {
-      if (i - l === 2) {
-        rangeWithDots.push(l + 1);
-      } else if (i - l !== 1) {
-        rangeWithDots.push('...');
-      }
-    }
-    rangeWithDots.push(i);
-    l = i;
-  }
+  useEffect(() => {
+    (async () => {
+      const response = await (
+        await fetch(`https://localhost:44341/api/players/getfreeagents?leagueid=${leagueId}`)
+      ).json();
 
-  console.log(rangeWithDots);
-  return rangeWithDots;
-}
-
-function FreeAgents(props) {
-  const { players } = props;
-
+      console.log(response);
+      setFreeAgents(response);
+      setLoading(false);
+    })();
+  }, [leagueId]);
   const pageSize = 25;
-  const pages = [...Array(Math.ceil(players.length / pageSize) - 1).keys()].map((x) => x + 1);
 
-  const [page, setPage] = useState(1);
-  const pagePlayers = players.slice(page * pageSize, (page + 1) * pageSize);
-
-  const pagesWithDots = pagination(page, pages.length);
-
-  return (
-    <div>
-      <div className="collection">
-        {pagePlayers.map((x) => (
-          <a key={x.id} className="collection-item" href="/some/player/url">
-            {x.firstName} {x.lastName}, {x.position} - {x.team}
-          </a>
-        ))}
-      </div>
-      {pages !== null && (
-        <ul className="pagination">
-          <li className={page === 1 ? 'disabled' : 'waves-effect'}>
-            <a href="#!" onClick={() => page !== 1 && setPage(page - 1)}>
-              <i className="material-icons">chevron_left</i>
-            </a>
-          </li>
-          {pagesWithDots.map((x, i) => (
-            <li
-              key={i}
-              // eslint-disable-next-line no-nested-ternary
-              className={x === page ? 'active' : x === '...' ? 'disabled' : 'waves-effect'}
-            >
-              <a href="#!" onClick={() => x !== '...' && setPage(x)}>
-                {x}
-              </a>
-            </li>
-          ))}
-          <li className={page === pages.length + 1 ? 'disabled' : 'waves-effect'}>
-            <a href="#!" onClick={() => page !== pages.length + 1 && setPage(page + 1)}>
-              <i className="material-icons">chevron_right</i>
-            </a>
-          </li>
-        </ul>
-      )}
-    </div>
+  return loading ? (
+    <Linear />
+  ) : (
+    <Fragment>
+      <h1 className="heading">Free Agents</h1>
+      <Pagination items={freeAgents} pageSize={pageSize} Content={Player} />
+    </Fragment>
   );
-}
+};
 
 export default FreeAgents;

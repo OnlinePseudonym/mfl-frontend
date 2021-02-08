@@ -5,7 +5,6 @@ import { useAuth } from 'context/auth-context';
 import UnauthenticatedApp from 'Unauthenticated';
 import AutheticatedApp from 'Authenticated';
 
-import 'materialize-css/dist/js/materialize.min';
 import 'materialize-css/dist/css/materialize.min.css';
 import Normalize from './NormalizeStyles';
 import BaseStyles from './BaseStyles';
